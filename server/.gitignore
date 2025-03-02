@@ -1,0 +1,20 @@
+# Node modules
+node_modules/
+
+# Deno dependencies
+deno.lock
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.vscode/
+.idea/
