@@ -25,7 +25,11 @@ const Clickable: React.FC<ClickableProps> = (props: ClickableProps) => {
   };
 
   return (
-    <span {...rest} onClick={clickWithSound} className={`cursor-pointer ${className}`}>
+    <span
+      {...rest}
+      onClick={clickWithSound}
+      className={`cursor-pointer ${className}`}
+    >
       {children}
     </span>
   );
