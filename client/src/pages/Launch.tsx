@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import Clickable from "../components/Clickable.tsx";
 
 interface Planet {
-  keplerName: string;
+  kepler_name: string;
 }
 
 interface LaunchProps {
@@ -20,8 +20,8 @@ const Launch: React.FC<LaunchProps> = ({
 }) => {
   const selectorBody = useMemo(() => {
     return planets?.map((planet) => (
-      <option value={planet.keplerName} key={planet.keplerName}>
-        {planet.keplerName}
+      <option value={planet.kepler_name} key={planet.kepler_name}>
+        {planet.kepler_name}
       </option>
     ));
   }, [planets]);
@@ -44,16 +44,14 @@ const Launch: React.FC<LaunchProps> = ({
         the earliest scheduled missions:
       </p>
       <ul className="list-disc list-inside mb-4 text-md font-semibold text-gray-600">
-        <li>Planetary radius &lt; 1.6 times Earth's radius</li>
-        <li>
-          Effective stellar flux &gt; 0.36 times Earth's value and &lt; 1.11
-          times Earth's value
-        </li>
+        <li>Planetary radius &gt; 0.5 and &lt; 1.5 times Earth's radius</li>
+        <li>Stellar mass &gt; 0.78 and &lt; 1.04 times Sun's mass</li>
+        <li>Stellar radius &gt; 0.99 and &lt; 1.01 times Sun's radius</li>
       </ul>
 
       <form
         onSubmit={submitLaunch}
-        className="flex flex-col p-2 rounded-md shadow gap-6 bg-orange-400"
+        className="flex flex-col p-2 rounded-md shadow gap-6 bg-green-600"
       >
         <div className="flex flex-col">
           <label
@@ -111,7 +109,7 @@ const Launch: React.FC<LaunchProps> = ({
           <select
             id="planets-selector"
             name="planets-selector"
-            className="p-2 border border-gray-300 rounded-md"
+            className="p-2 border border-gray-300 rounded-md text-black"
           >
             {selectorBody}
           </select>
