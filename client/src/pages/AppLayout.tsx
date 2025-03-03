@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import usePlanets from "../hooks/usePlanets.ts";
 import useLaunches from "../hooks/useLaunches.ts";
@@ -21,36 +21,49 @@ const AppLayout: React.FC = () => {
   } = useLaunches();
 
   const planets = usePlanets();
-  
+
   return (
     <div className="flex flex-col justify-between items-center h-screen">
       <Header />
       <Centered className="m-2">
-          <Routes>
-            <Route path="/" element={
-              <Launch 
-                entered={true}
-                planets={planets}
-                submitLaunch={submitLaunch}
-                isPendingLaunch={isPendingLaunch} />
-            } />
-            <Route path="/launch" element={
+        <Routes>
+          <Route
+            path="/"
+            element={
               <Launch
                 entered={true}
                 planets={planets}
                 submitLaunch={submitLaunch}
-                isPendingLaunch={isPendingLaunch} />
-            } />
-            <Route path="/upcoming" element={
+                isPendingLaunch={isPendingLaunch}
+              />
+            }
+          />
+          <Route
+            path="/launch"
+            element={
+              <Launch
+                entered={true}
+                planets={planets}
+                submitLaunch={submitLaunch}
+                isPendingLaunch={isPendingLaunch}
+              />
+            }
+          />
+          <Route
+            path="/upcoming"
+            element={
               <Upcoming
                 entered={true}
                 launches={launches}
-                abortLaunch={abortLaunch} />
-            } />
-            <Route path="/history" element={
-              <History launches={launches} entered={true} />
-            } />
-          </Routes>
+                abortLaunch={abortLaunch}
+              />
+            }
+          />
+          <Route
+            path="/history"
+            element={<History launches={launches} entered={true} />}
+          />
+        </Routes>
       </Centered>
       <Footer />
     </div>
