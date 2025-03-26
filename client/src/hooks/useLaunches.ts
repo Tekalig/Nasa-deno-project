@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  httpAbortLaunch,
   httpGetLaunches,
   httpSubmitLaunch,
-  httpAbortLaunch,
-} from './requests.ts';
+} from "./requests.ts";
 
 interface Launch {
   flightNumber: number;
@@ -14,8 +14,7 @@ interface Launch {
   // Add other properties as needed
 }
 
-function useLaunches(
-) {
+function useLaunches() {
   const [launches, saveLaunches] = useState<Launch[]>([]);
   const [isPendingLaunch, setPendingLaunch] = useState(false);
 
@@ -28,30 +27,34 @@ function useLaunches(
     getLaunches();
   }, [getLaunches]);
 
-  const submitLaunch = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setPendingLaunch(true);
-    const data = new FormData(e.currentTarget);
-    const launchDate = new Date(data.get("launch-day") as string);
-    const mission = data.get("mission-name") as string;
-    const rocket = data.get("rocket-name") as string;
-    const target = data.get("planets-selector") as string;
-    const response = await httpSubmitLaunch({
-      launchDate,
-      mission,
-      rocket,
-      target,
-    });
+  const submitLaunch = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setPendingLaunch(true);
+      const data = new FormData(e.currentTarget);
+      const launchDate = new Date(data.get("launch-day") as string);
+      const mission = data.get("mission-name") as string;
+      const rocket = data.get("rocket-name") as string;
+      const target = data.get("planets-selector") as string;
+      const response = await httpSubmitLaunch({
+        launchDate,
+        mission,
+        rocket,
+        target,
+      });
 
-    const success = response.ok;
-    if (success) {
-      getLaunches();
-      setTimeout(() => {
+      const success = response.ok;
+      if (success) {
+        getLaunches();
+        setTimeout(() => {
+          setPendingLaunch(false);
+        }, 800);
+      } else {
         setPendingLaunch(false);
-      }, 800);
-    } else {
-      setPendingLaunch(false);}
-  }, [getLaunches]);
+      }
+    },
+    [getLaunches],
+  );
 
   const abortLaunch = useCallback(async (id: number) => {
     const response = await httpAbortLaunch(id);
@@ -60,7 +63,8 @@ function useLaunches(
     if (success) {
       getLaunches();
     } else {
-      console.error("Failed to abort launch");}
+      console.error("Failed to abort launch");
+    }
   }, [getLaunches]);
 
   return {
