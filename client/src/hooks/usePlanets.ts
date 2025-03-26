@@ -2,24 +2,24 @@ import { useCallback, useEffect, useState } from "react";
 import { httpGetPlanets } from "./requests.ts";
 
 interface Planet {
-    // Define the properties of a Planet object
-    name: string;
-    // Add other properties as needed
+  // Define the properties of a Planet object
+  name: string;
+  // Add other properties as needed
 }
 
 function usePlanets() {
-    const [planets, setPlanets] = useState<Planet[]>([]);
+  const [planets, setPlanets] = useState<Planet[]>([]);
 
-    const getPlanets = useCallback(async () => {
-        const fetchedPlanets = await httpGetPlanets();
-        setPlanets(fetchedPlanets);
-    }, []);
+  const getPlanets = useCallback(async () => {
+    const fetchedPlanets = await httpGetPlanets();
+    setPlanets(fetchedPlanets);
+  }, []);
 
-    useEffect(() => {
-        getPlanets();
-    }, [getPlanets]);
+  useEffect(() => {
+    getPlanets();
+  }, [getPlanets]);
 
-    return planets;
+  return planets;
 }
 
 export default usePlanets;
